@@ -7,3 +7,16 @@
 #greeting-container {
   margin-top: 20px;
 }
+
+/* side-by-side images */
+.column {
+    float: left;
+    width: 35%;
+    padding: 5px;
+}
+
+.row::after {
+    content: "";
+    clear: both;
+    display: table;
+}
