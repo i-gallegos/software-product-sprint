@@ -8,7 +8,19 @@
   margin-top: 20px;
 }
 
-/* side-by-side images */
+figure {
+  text-align: center;
+  font-style: italic;
+}
+
+/* image formatting */
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
 .column {
     float: left;
     width: 35%;
@@ -20,3 +32,4 @@
     clear: both;
     display: table;
 }
+

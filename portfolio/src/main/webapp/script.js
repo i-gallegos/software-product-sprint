@@ -15,14 +15,14 @@
 /**
  * Adds a random greeting to the page.
  */
-function addRandomGreeting() {
-  const greetings =
-      ['I have never broken a bone!', 'I used to play soccer!', 'My favorite animal is sheep!', 'I ran a marathon in high school!'];
+function addRandomFact() {
+  const facts =
+      ['I have never broken a bone!', 'I used to play soccer!', 'My favorite animal is sheep!', 'I love pumpkin-flavored foods!'];
 
   // Pick a random greeting.
-  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
+  const fact = facts[Math.floor(Math.random() * facts.length)];
 
   // Add it to the page.
-  const greetingContainer = document.getElementById('greeting-container');
-  greetingContainer.innerText = greeting;
+  const factContainer = document.getElementById('fact-container');
+  factContainer.innerText = fact;
 }
