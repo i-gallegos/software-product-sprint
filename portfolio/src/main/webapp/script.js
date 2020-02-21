@@ -13,13 +13,13 @@
 // limitations under the License.
 
 /**
- * Adds a random greeting to the page.
+ * Adds a random fact to the page.
  */
 function addRandomFact() {
   const facts =
       ['I have never broken a bone!', 'I used to play soccer!', 'My favorite animal is sheep!', 'I love pumpkin-flavored foods!'];
 
-  // Pick a random greeting.
+  // Pick a random fact.
   const fact = facts[Math.floor(Math.random() * facts.length)];
 
   // Add it to the page.
@@ -30,9 +30,23 @@ function addRandomFact() {
 /**
  * Fetch content from '/data' url.
  */
-function getGreeting() {
-  fetch('/data').then(response => response.text()).then((greeting) => {
-    document.getElementById('greeting-container').innerText = greeting;
+function getComments() {
+  fetch('/data').then(response => response.json()).then((comments) => {
+    const commentsListElement = document.getElementById('comments-container');
+    commentsListElement.innerHTML = '';
+    commentsListElement.appendChild(
+        createListElement('Message one: ' + comments.messageOne));
+    commentsListElement.appendChild(
+        createListElement('Message two: ' + comments.messageTwo));
+    commentsListElement.appendChild(
+        createListElement('Message three: ' + comments.messageThree));
   });
+}
+
+/** Creates an <li> element containing text. */
+function createListElement(text) {
+  const liElement = document.createElement('li');
+  liElement.innerText = text;
+  return liElement;
 }
 

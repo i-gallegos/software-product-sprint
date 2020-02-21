@@ -15,6 +15,8 @@
 package com.google.sps.servlets;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -23,10 +25,30 @@ import javax.servlet.http.HttpServletResponse;
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
+    private List<String> messages;
+
+  @Override
+  public void init() {
+    messages = new ArrayList<>();
+    messages.add("Welcome to my portfolio.");
+    messages.add("This is Isabel's profile.");
+    messages.add("You can find more information here.");
+  }
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("text/html;");
-    response.getWriter().println("<h1>Hello Isabel!</h1>");
+
+    String json = "{";
+    json += "\"messageOne\": ";
+    json += "\"" + messages.get(0) + "\"";
+    json += ", ";
+    json += "\"messageTwo\": ";
+    json += "\"" + messages.get(1) + "\"";
+    json += ", ";
+    json += "\"messageThree\": ";
+    json += "\"" + messages.get(2) + "\"";
+    json += "}";
+    response.getWriter().println(json);
   }
 }
