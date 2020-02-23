@@ -34,12 +34,8 @@ function getComments() {
   fetch('/data').then(response => response.json()).then((comments) => {
     const commentsListElement = document.getElementById('comments-container');
     commentsListElement.innerHTML = '';
-    commentsListElement.appendChild(
-        createListElement('Message one: ' + comments.messageOne));
-    commentsListElement.appendChild(
-        createListElement('Message two: ' + comments.messageTwo));
-    commentsListElement.appendChild(
-        createListElement('Message three: ' + comments.messageThree));
+    commentsListElement.appendChild(createListElement(comments.comment.name + ": " + comments.comment.text));
+    // TODO: print all comments, not just the most recent
   });
 }
 

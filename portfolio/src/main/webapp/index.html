@@ -13,10 +13,6 @@
       </p>
       <img src="images/sisters.JPG" style="width:300px" class="center"/>
 
-      <p>Click here for a comment:</p>
-      <button onclick="getComments()" class="center">Fetch a comment!</button>
-      <div id="comments-container"></div>
-
       <p>Click here to for a random fact about me:</p>
       <button onclick="addRandomFact()" class="center">Fact Generator</button>
       <div id="fact-container"></div>
@@ -59,6 +55,22 @@
             </figure>
         </div>
       </div>
+
+      <p> Comments? Add them here! </p>
+      <form action="/data" method="POST">
+        <p> Enter your name. </p>
+        <textarea name="comment-name">FirstName LastName</textarea>
+        <br/><br/>
+
+        <textarea name="comment-text">Enter your comment here.</textarea>
+        <br/><br/>
+
+        <input type="submit" />
+      </form>
+
+      <p>Click here to see all the comments:</p>
+      <button onclick="getComments()" class="center">See all comments!</button>
+      <div id="comments-container"></div>
 
     </div>
   </body>

@@ -25,14 +25,11 @@ import javax.servlet.http.HttpServletResponse;
 /** Servlet that returns some example content. TODO: modify this file to handle comments data */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
-    private List<String> messages;
+    private ArrayList<ArrayList<String>> comments;
 
   @Override
   public void init() {
-    messages = new ArrayList<>();
-    messages.add("Welcome to my portfolio.");
-    messages.add("This is Isabel's profile.");
-    messages.add("You can find more information here.");
+    comments = new ArrayList<>();
   }
 
   @Override
@@ -40,15 +37,51 @@ public class DataServlet extends HttpServlet {
     response.setContentType("text/html;");
 
     String json = "{";
-    json += "\"messageOne\": ";
-    json += "\"" + messages.get(0) + "\"";
-    json += ", ";
-    json += "\"messageTwo\": ";
-    json += "\"" + messages.get(1) + "\"";
-    json += ", ";
-    json += "\"messageThree\": ";
-    json += "\"" + messages.get(2) + "\"";
+    for (int i = 0; i < comments.size(); i++) {
+        json += "\"" + "comment" + "\": ";
+        json += "{";
+        json += "\"" + "name" + "\":";
+        json += "\"" + comments.get(i).get(0) + "\"";
+        json += ", \"" + "text" + "\":";
+        json += "\"" + comments.get(i).get(1) + "\"";
+        json += "}";
+        if (i != comments.size() - 1) {
+            json += ", ";
+        }   
+    }
     json += "}";
     response.getWriter().println(json);
+    
+  }
+
+  @Override
+  public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    // Get the input from the form.
+    String name = getParameter(request, "comment-name", "");
+    String comment = getParameter(request, "comment-text", "");
+
+    // Respond with the result.
+    response.setContentType("text/html;");
+    response.getWriter().println(name + ": " + comment);
+
+    ArrayList<String> newComment = new ArrayList<String>();
+    newComment.add(name);
+    newComment.add(comment);
+    comments.add(newComment);
+
+    // Redirect back to the HTML page.
+    response.sendRedirect("/index.html");
+  }
+
+  /**
+   * @return the request parameter, or the default value if the parameter
+   *         was not specified by the client
+   */
+  private String getParameter(HttpServletRequest request, String name, String defaultValue) {
+    String value = request.getParameter(name);
+    if (value == null) {
+      return defaultValue;
+    }
+    return value;
   }
 }
