@@ -14,6 +14,9 @@
 
 package com.google.sps.servlets;
 
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +38,7 @@ public class DataServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("text/html;");
-
+    
     String json = "{";
     for (int i = 0; i < comments.size(); i++) {
         json += "\"" + "comment" + "\": ";
@@ -60,6 +63,23 @@ public class DataServlet extends HttpServlet {
     String name = getParameter(request, "comment-name", "");
     String comment = getParameter(request, "comment-text", "");
 
+    // Store data.
+    Entity commentEntity = new Entity("Comment");
+    commentEntity.setProperty("name", name);
+    commentEntity.setProperty("text", comment);
+
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    datastore.put(commentEntity);
+
+    // Redirect back to the HTML page.
+    response.sendRedirect("/index.html");
+
+    /*
+    // Store with ArrayList.
+    // Get the input from the form.
+    String name = getParameter(request, "comment-name", "");
+    String comment = getParameter(request, "comment-text", "");
+
     // Respond with the result.
     response.setContentType("text/html;");
     response.getWriter().println(name + ": " + comment);
@@ -71,6 +91,7 @@ public class DataServlet extends HttpServlet {
 
     // Redirect back to the HTML page.
     response.sendRedirect("/index.html");
+    */
   }
 
   /**
