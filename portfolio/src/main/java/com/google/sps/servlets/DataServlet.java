@@ -17,6 +17,8 @@ package com.google.sps.servlets;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.PreparedQuery;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,22 +41,23 @@ public class DataServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("text/html;");
     
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    Query query = new Query("Comment");
+    PreparedQuery results = datastore.prepare(query);
+
     String json = "{";
-    for (int i = 0; i < comments.size(); i++) {
+    for (Entity entity : results.asIterable()) {
         json += "\"" + "comment" + "\": ";
         json += "{";
         json += "\"" + "name" + "\":";
-        json += "\"" + comments.get(i).get(0) + "\"";
+        json += "\"" + entity.getProperty("name") + "\"";
         json += ", \"" + "text" + "\":";
-        json += "\"" + comments.get(i).get(1) + "\"";
+        json += "\"" + entity.getProperty("text") + "\"";
         json += "}";
-        if (i != comments.size() - 1) {
-            json += ", ";
-        }   
+        json += ", ";
     }
-    json += "}";
+    json = json.substring(0, json.length()-2) + "}";
     response.getWriter().println(json);
-    
   }
 
   @Override
@@ -73,25 +76,6 @@ public class DataServlet extends HttpServlet {
 
     // Redirect back to the HTML page.
     response.sendRedirect("/index.html");
-
-    /*
-    // Store with ArrayList.
-    // Get the input from the form.
-    String name = getParameter(request, "comment-name", "");
-    String comment = getParameter(request, "comment-text", "");
-
-    // Respond with the result.
-    response.setContentType("text/html;");
-    response.getWriter().println(name + ": " + comment);
-
-    ArrayList<String> newComment = new ArrayList<String>();
-    newComment.add(name);
-    newComment.add(comment);
-    comments.add(newComment);
-
-    // Redirect back to the HTML page.
-    response.sendRedirect("/index.html");
-    */
   }
 
   /**
