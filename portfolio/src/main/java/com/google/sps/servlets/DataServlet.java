@@ -46,8 +46,9 @@ public class DataServlet extends HttpServlet {
     PreparedQuery results = datastore.prepare(query);
 
     String json = "{";
+    int counter = 0;
     for (Entity entity : results.asIterable()) {
-        json += "\"" + "comment" + "\": ";
+        json += "\"" + "comment" + Integer.toString(counter) + "\": ";
         json += "{";
         json += "\"" + "name" + "\":";
         json += "\"" + entity.getProperty("name") + "\"";
@@ -55,6 +56,7 @@ public class DataServlet extends HttpServlet {
         json += "\"" + entity.getProperty("text") + "\"";
         json += "}";
         json += ", ";
+        counter = counter + 1;
     }
     json = json.substring(0, json.length()-2) + "}";
     response.getWriter().println(json);

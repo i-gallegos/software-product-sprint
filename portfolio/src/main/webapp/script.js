@@ -31,11 +31,21 @@ function addRandomFact() {
  * Fetch content from '/data' url.
  */
 function getComments() {
+  
   fetch('/data').then(response => response.json()).then((comments) => {
     const commentsListElement = document.getElementById('comments-container');
     commentsListElement.innerHTML = '';
-    commentsListElement.appendChild(createListElement(comments.comment.name + ": " + comments.comment.text));
-    // TODO: print all comments, not just the most recent
+
+    counter = 0;
+    while (true) {
+        const key = "comment" + counter.toString();
+        if (!comments.hasOwnProperty(key)) {
+            break;
+        }
+        commentsListElement.appendChild(createListElement(comments[key].name + ": " + comments[key].text));
+        counter = counter + 1;
+    }
+    
   });
 }
 
