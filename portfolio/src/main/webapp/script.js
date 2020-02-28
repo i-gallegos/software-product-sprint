@@ -13,16 +13,46 @@
 // limitations under the License.
 
 /**
- * Adds a random greeting to the page.
+ * Adds a random fact to the page.
  */
-function addRandomGreeting() {
-  const greetings =
-      ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
+function addRandomFact() {
+  const facts =
+      ['I have never broken a bone!', 'I used to play soccer!', 'My favorite animal is sheep!', 'I love pumpkin-flavored foods!'];
 
-  // Pick a random greeting.
-  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
+  // Pick a random fact.
+  const fact = facts[Math.floor(Math.random() * facts.length)];
 
   // Add it to the page.
-  const greetingContainer = document.getElementById('greeting-container');
-  greetingContainer.innerText = greeting;
+  const factContainer = document.getElementById('fact-container');
+  factContainer.innerText = fact;
 }
+
+/**
+ * Fetch content from '/data' url.
+ */
+function getComments() {
+  
+  fetch('/data').then(response => response.json()).then((comments) => {
+    const commentsListElement = document.getElementById('comments-container');
+    commentsListElement.innerHTML = '';
+
+    counter = 0;
+    while (true) {
+        const key = "comment" + counter.toString();
+        if (!comments.hasOwnProperty(key)) {
+            break;
+        }
+        commentsListElement.appendChild(createListElement(comments[key].name + ": " + comments[key].text));
+        counter = counter + 1;
+    }
+    
+  });
+}
+
+/** Creates an <li> element containing text. */
+function createListElement(text) {
+  const liElement = document.createElement('li');
+  liElement.innerText = text;
+  return liElement;
+}
+

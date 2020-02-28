@@ -2,17 +2,75 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>My Portfolio</title>
+    <title>Isabel's Portfolio</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
   <body>
     <div id="content">
-      <h1>My Portfolio</h1>
-      <p>This is my portfolio.</p>
-      <p>Click here to get a random message:</p>
-      <button onclick="addRandomGreeting()">Hello</button>
-      <div id="greeting-container"></div>
+      <h1>Isabel Gallegos</h1>
+      <p>Welcome to my profile! Here you can learn more about my background, my interests, my family, and my goals!
+      </p>
+      <img src="images/sisters.JPG" style="width:300px" class="center"/>
+
+      <p>Click here to for a random fact about me:</p>
+      <button onclick="addRandomFact()" class="center">Fact Generator</button>
+      <div id="fact-container"></div>
+      
+      <p>Click on one of the images below to learn more about what's important to me!</p>
+      
+      <div class="row">
+        <div class="column">
+            <figure>
+                <a href="interests.html">
+                    <img src="images/photography.JPG" alt="Interests" style="width:230px"/>
+                </a> 
+                <figcaption>My Interests</figcaption>
+            </figure>
+        </div>
+        <div class="column">
+            <figure>
+                <a href="goals.html">
+                    <img src="images/shpe.JPEG" alt="Goals" style="width:230px"/>
+                </a>
+                <figcaption>My Goals</figcaption>
+            </figure>
+        </div>
+      </div>
+      <div class="row">
+        <div class="column">
+            <figure>
+                <a href="family.html">
+                    <img src="images/family.jpg" alt="Family" style="width:230px"/>
+                </a>
+                <figcaption>My Family</figcaption>
+            </figure>
+        </div>
+        <div class="column">
+            <figure>
+                <a href="home.html">
+                    <img src="images/sandias.jpg" alt="Home" style="width:230px"/>
+                </a>
+                <figcaption>My Home</figcaption>
+            </figure>
+        </div>
+      </div>
+
+      <p> Comments? Add them here! </p>
+      <form action="/data" method="POST">
+        <textarea name="comment-name">FirstName LastName</textarea>
+        <br/><br/>
+
+        <textarea name="comment-text">Enter your comment here.</textarea>
+        <br/><br/>
+
+        <input type="submit" />
+      </form>
+
+      <p>Click here to see all the comments:</p>
+      <button onclick="getComments()" class="center">See all comments!</button>
+      <div id="comments-container"></div>
+
     </div>
   </body>
 </html>
