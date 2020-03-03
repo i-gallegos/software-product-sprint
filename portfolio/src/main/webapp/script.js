@@ -33,9 +33,6 @@ function addRandomFact() {
 function getComments() {
   
   fetch('/auth').then(response => response.text()).then((login) => {
-      console.log(login);
-      console.log(typeof login);
-      console.log(login.includes("Logged in."))
       if (!login.includes("Logged in.")) { // not logged in, hide comment form and display
           document.getElementById("comments-form").style.display = "none";
           document.getElementById("comments-container").style.display = "none";

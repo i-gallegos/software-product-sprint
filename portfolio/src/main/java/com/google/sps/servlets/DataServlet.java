@@ -70,9 +70,11 @@ public class DataServlet extends HttpServlet {
     String name = getParameter(request, "comment-name", "");
     String comment = getParameter(request, "comment-text", "");
 
-    // Get user information from UserService
+    // Get user information from UserService.
     UserService userService = UserServiceFactory.getUserService();
     String userEmail = userService.getCurrentUser().getEmail();
+
+    // Include email in name information.
     String nameAndEmail = name + " (" + userEmail + ")";
 
     // Store data.

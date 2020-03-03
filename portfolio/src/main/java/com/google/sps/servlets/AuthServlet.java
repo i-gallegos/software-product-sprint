@@ -34,7 +34,8 @@ public class AuthServlet extends HttpServlet {
     UserService userService = UserServiceFactory.getUserService();
     if (userService.isUserLoggedIn()) {
       response.getWriter().println("Logged in.");
-    } else {
+    } else { 
+      // redirect to login page if user is not logged in
       String urlToRedirectToAfterUserLogsIn = "/index.html";
       String loginUrl = userService.createLoginURL(urlToRedirectToAfterUserLogsIn);
 
