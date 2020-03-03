@@ -17,6 +17,7 @@ package com.google.sps.servlets;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -28,6 +29,7 @@ public class AuthServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("text/html");
+    PrintWriter out = response.getWriter();
 
     UserService userService = UserServiceFactory.getUserService();
     if (userService.isUserLoggedIn()) {
@@ -39,9 +41,10 @@ public class AuthServlet extends HttpServlet {
       response.getWriter().println("<p>Hello " + userEmail + "!</p>");
       response.getWriter().println("<p>Logout <a href=\"" + logoutUrl + "\">here</a>.</p>");
       */
+
       response.getWriter().println("logged in");
     } else {
-      String urlToRedirectToAfterUserLogsIn = "/index";
+      String urlToRedirectToAfterUserLogsIn = "/index.html";
       String loginUrl = userService.createLoginURL(urlToRedirectToAfterUserLogsIn);
 
       response.getWriter().println("<p>Hello, please log in here!</p>");

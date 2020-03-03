@@ -35,12 +35,13 @@ function getComments() {
   fetch('/auth').then(response => response.text()).then((login) => {
       console.log(login);
       console.log(typeof login);
-      if (login !== "logged in") {
-          console.log("redirecting...");
+      console.log(login.includes("logged in"))
+      if (!login.includes("logged in")) { // not logged in, hide comment form and display
+          document.getElementById("comments-form").style.display = "none";
           const authLink = document.getElementById('comments-container');
           authLink.innerHTML = '<h3 class="center">Click <a href="auth">here</a> to log in.</h3>'
-      } else {
-          console.log("displaying comments...")
+      } else { // logged in, display comments
+          document.getElementById("comments-form").style.display = "block";
           displayComments();
       }
   });
