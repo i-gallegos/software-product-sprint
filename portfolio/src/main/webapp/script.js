@@ -32,7 +32,24 @@ function addRandomFact() {
  */
 function getComments() {
   
-  fetch('/data').then(response => response.json()).then((comments) => {
+  fetch('/auth').then(response => response.text()).then((login) => {
+      console.log(login);
+      console.log(typeof login);
+      if (login !== "logged in") {
+          console.log("redirecting...");
+          const authLink = document.getElementById('comments-container');
+          authLink.innerHTML = '<h3 class="center">Click <a href="auth">here</a> to log in.</h3>'
+      } else {
+          console.log("displaying comments...")
+          displayComments();
+      }
+  });
+
+  
+}
+
+function displayComments() {
+    fetch('/data').then(response => response.json()).then((comments) => {
     const commentsListElement = document.getElementById('comments-container');
     commentsListElement.innerHTML = '';
 
@@ -45,7 +62,6 @@ function getComments() {
         commentsListElement.appendChild(createListElement(comments[key].name + ": " + comments[key].text));
         counter = counter + 1;
     }
-    
   });
 }
 
