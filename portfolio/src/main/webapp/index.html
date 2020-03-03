@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="style.css">
     <script src="script.js"></script>
   </head>
-  <body>
+  <body onload="getComments()">
     <div id="content">
       <h1>Isabel Gallegos</h1>
       <p>Welcome to my profile! Here you can learn more about my background, my interests, my family, and my goals!
@@ -57,7 +57,7 @@
       </div>
 
       <p> Comments? Add them here! </p>
-      <div onload="getComments()"></div>
+      
       <div id="comments-form">
            <form action="/data" method="POST">
             <textarea name="comment-name">FirstName LastName</textarea>
@@ -67,11 +67,11 @@
             <br/><br/>
 
             <input type="submit" />
-      </form>
+            <br/><br/>
+          </form>
       </div>
       <div id="comments-container"></div>
-
-     
+      <div id="comments-link"></div>
 
     </div>
   </body>

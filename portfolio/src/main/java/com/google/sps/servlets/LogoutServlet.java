@@ -23,8 +23,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/auth")
-public class AuthServlet extends HttpServlet {
+@WebServlet("/logout")
+public class LogoutServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -33,13 +33,15 @@ public class AuthServlet extends HttpServlet {
 
     UserService userService = UserServiceFactory.getUserService();
     if (userService.isUserLoggedIn()) {
-      response.getWriter().println("Logged in.");
-    } else {
-      String urlToRedirectToAfterUserLogsIn = "/index.html";
-      String loginUrl = userService.createLoginURL(urlToRedirectToAfterUserLogsIn);
+      String userEmail = userService.getCurrentUser().getEmail();
+      String urlToRedirectToAfterUserLogsOut = "/index.html";
+      String logoutUrl = userService.createLogoutURL(urlToRedirectToAfterUserLogsOut);
 
-      response.getWriter().println("<p>Hello, please log in here!</p>");
-      response.getWriter().println("<p>Login <a href=\"" + loginUrl + "\">here</a>.</p>");
+      response.getWriter().println("<p>Hello " + userEmail + "!</p>");
+      response.getWriter().println("<p>Logout <a href=\"" + logoutUrl + "\">here</a>.</p>");
+      
+    } else {
+      response.getWriter().println("Already logged out.");
     }
   }
 }

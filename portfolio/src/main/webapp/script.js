@@ -35,18 +35,27 @@ function getComments() {
   fetch('/auth').then(response => response.text()).then((login) => {
       console.log(login);
       console.log(typeof login);
-      console.log(login.includes("logged in"))
-      if (!login.includes("logged in")) { // not logged in, hide comment form and display
+      console.log(login.includes("Logged in."))
+      if (!login.includes("Logged in.")) { // not logged in, hide comment form and display
           document.getElementById("comments-form").style.display = "none";
-          const authLink = document.getElementById('comments-container');
-          authLink.innerHTML = '<h3 class="center">Click <a href="auth">here</a> to log in.</h3>'
+          document.getElementById("comments-container").style.display = "none";
+
+          // display log in link
+          const authLink = document.getElementById('comments-link');
+          authLink.innerHTML = '<h3 class="center">Log in <a href="auth">here</a> to add comments.</h3>'
+
       } else { // logged in, display comments
           document.getElementById("comments-form").style.display = "block";
-          displayComments();
-      }
-  });
+          document.getElementById("comments-container").style.display = "block";
 
-  
+          // display comments from JSON object
+          displayComments();
+
+          // display log out link
+          const logoutLink = document.getElementById('comments-link');
+          logoutLink.innerHTML = '<h3 class="center">Click <a href="logout">here</a> to log out.</h3>';
+      }
+  }); 
 }
 
 function displayComments() {
