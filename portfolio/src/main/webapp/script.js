@@ -32,7 +32,31 @@ function addRandomFact() {
  */
 function getComments() {
   
-  fetch('/data').then(response => response.json()).then((comments) => {
+  fetch('/auth').then(response => response.text()).then((login) => {
+      if (!login.includes("Logged in.")) { // not logged in, hide comment form and display
+          document.getElementById("comments-form").style.display = "none";
+          document.getElementById("comments-container").style.display = "none";
+
+          // display log in link
+          const authLink = document.getElementById('comments-link');
+          authLink.innerHTML = '<h3 class="center">Log in <a href="auth">here</a> to add comments.</h3>'
+
+      } else { // logged in, display comments
+          document.getElementById("comments-form").style.display = "block";
+          document.getElementById("comments-container").style.display = "block";
+
+          // display comments from JSON object
+          displayComments();
+
+          // display log out link
+          const logoutLink = document.getElementById('comments-link');
+          logoutLink.innerHTML = '<h3 class="center">Click <a href="logout">here</a> to log out.</h3>';
+      }
+  }); 
+}
+
+function displayComments() {
+    fetch('/data').then(response => response.json()).then((comments) => {
     const commentsListElement = document.getElementById('comments-container');
     commentsListElement.innerHTML = '';
 
@@ -45,7 +69,6 @@ function getComments() {
         commentsListElement.appendChild(createListElement(comments[key].name + ": " + comments[key].text));
         counter = counter + 1;
     }
-    
   });
 }
 

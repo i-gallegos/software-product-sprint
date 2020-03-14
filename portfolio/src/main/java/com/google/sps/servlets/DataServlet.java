@@ -14,6 +14,8 @@
 
 package com.google.sps.servlets;
 
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
@@ -68,9 +70,16 @@ public class DataServlet extends HttpServlet {
     String name = getParameter(request, "comment-name", "");
     String comment = getParameter(request, "comment-text", "");
 
+    // Get user information from UserService.
+    UserService userService = UserServiceFactory.getUserService();
+    String userEmail = userService.getCurrentUser().getEmail();
+
+    // Include email in name information.
+    String nameAndEmail = name + " (" + userEmail + ")";
+
     // Store data.
     Entity commentEntity = new Entity("Comment");
-    commentEntity.setProperty("name", name);
+    commentEntity.setProperty("name", nameAndEmail);
     commentEntity.setProperty("text", comment);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
